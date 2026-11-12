@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Юлия Дмитриевна · Отзывы</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  :root{
+    --bg:#eef2f9;--card:#fff;--ink:#0b1e3a;--ink-soft:#253c5c;--muted:#7a8ca3;
+    --line:#e3eaf3;--line-strong:#cfdceb;--gold:#f9b43a;--gold-deep:#b07f2a;--gold-soft:#fdf6e9;
+    --navy:#0b1e3a;--navy-2:#132b4a;--blue:#4875b0;--blue-soft:#f3f8ff;
+    --radius-lg:32px;--radius-md:24px;
+    --shadow-sm:0 4px 12px rgba(11,30,58,.04);--shadow-md:0 12px 30px rgba(11,30,58,.07);
+    --shadow-lg:0 20px 50px rgba(11,30,58,.10);
+    --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 500px at 15% -10%,#dbe7fb 0%,transparent 60%),
+      radial-gradient(900px 400px at 100% 0%,#f3e8d4 0%,transparent 55%),
+      var(--bg);
+    background-attachment:fixed;font-family:var(--font);color:var(--ink);
+    padding:2.5rem 1rem 4rem;line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .container{max-width:1100px;margin:0 auto}
+  .profile-header{
+    position:relative;background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);
+    border-radius:var(--radius-lg);padding:2.2rem 2.2rem 1.8rem;margin-bottom:1.6rem;
+    box-shadow:var(--shadow-md);border:1px solid var(--line);overflow:hidden;
+    animation:rise .6s var(--ease) both;
+  }
+  .profile-header::before{
+    content:"";position:absolute;inset:0 0 auto 0;height:5px;
+    background:linear-gradient(90deg,var(--navy),var(--blue) 45%,var(--gold) 100%);opacity:.9;
+  }
+  .profile-top{display:flex;flex-wrap:wrap;align-items:center;gap:1.8rem;margin-bottom:1.6rem}
+  .avatar-wrap{
+    flex-shrink:0;width:120px;height:120px;border-radius:50%;overflow:hidden;
+    background:linear-gradient(135deg,var(--blue),var(--navy));display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 30px rgba(11,30,58,.28);border:4px solid #fff;outline:1px solid var(--line-strong);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+  }
+  .avatar-wrap:hover{transform:scale(1.04) rotate(-1.5deg);box-shadow:0 18px 38px rgba(11,30,58,.35)}
+  .avatar-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+  .profile-name{flex:1;min-width:220px}
+  .profile-name h1{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800;letter-spacing:-.025em;color:var(--ink);margin-bottom:.55rem;line-height:1.15}
+  .badge{
+    display:inline-flex;align-items:center;gap:.45rem;background:linear-gradient(180deg,#eef4ff,#e6efff);
+    color:#1e4f8a;padding:.38rem 1.05rem;border-radius:40px;font-size:.85rem;font-weight:600;
+    border:1px solid #d6e4fb;box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+  }
+  .badge i{color:var(--blue)}
+  .rating-block{
+    display:flex;align-items:center;gap:1.1rem;background:linear-gradient(180deg,#fdfefe,#f5f9ff);
+    padding:.9rem 1.6rem;border-radius:60px;border:1px solid var(--line);margin-left:auto;
+    box-shadow:var(--shadow-sm),inset 0 1px 0 #fff;transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+  }
+  .rating-block:hover{transform:translateY(-2px);box-shadow:var(--shadow-md),inset 0 1px 0 #fff}
+  .rating-number{font-size:2.3rem;font-weight:800;color:var(--ink);line-height:1;letter-spacing:-.03em}
+  .stars{color:var(--gold);font-size:1.05rem;letter-spacing:2.5px;white-space:nowrap;text-shadow:0 2px 6px rgba(249,180,58,.35)}
+  .rating-count{font-size:.88rem;color:var(--muted);margin-left:.25rem;font-weight:500}
+  .stats{display:flex;flex-wrap:wrap;gap:1.4rem 2rem;margin-top:1.2rem;padding-top:1.3rem;border-top:1px dashed var(--line)}
+  .stat-item{display:flex;align-items:center;gap:.65rem;font-size:.92rem;animation:fadeSlide .5s var(--ease) both}
+  .stat-label{font-weight:600;color:#2e405b;min-width:62px;font-size:.88rem}
+  .bar-bg{width:170px;height:9px;background:#e4ebf4;border-radius:12px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(11,30,58,.08)}
+  .bar-fill{height:100%;border-radius:12px;background:linear-gradient(90deg,#c5d3e6,#a8bad5);width:0;transition:width 1s var(--ease);box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+  .bar-fill.hot{background:linear-gradient(90deg,#ffcd68,var(--gold))}
+  .stat-percent{font-weight:700;color:var(--ink);min-width:46px;text-align:right;font-variant-numeric:tabular-nums;font-size:.9rem}
+  .diplomas{
+    background:#fff;border-radius:var(--radius-md);padding:1.6rem 1.8rem;margin-bottom:2.2rem;
+    box-shadow:var(--shadow-sm);border:1px solid var(--line);animation:rise .6s .05s var(--ease) both;
+  }
+  .diplomas-head{
+    display:flex;align-items:center;gap:.6rem;margin-bottom:1.1rem;
+    font-weight:700;font-size:1.05rem;color:var(--ink);letter-spacing:-.01em;
+  }
+  .diplomas-head i{color:var(--blue);font-size:1.05rem}
+  .diplomas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem}
+  .diploma-card{
+    display:flex;align-items:center;gap:.95rem;padding:.85rem 1rem;border-radius:16px;
+    background:linear-gradient(180deg,#fbfdff,#f4f9ff);border:1px solid var(--line);
+    transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s;
+    text-decoration:none;color:inherit;
+  }
+  .diploma-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:#c8dbef}
+  .diploma-thumb{
+    flex-shrink:0;width:64px;height:64px;border-radius:12px;overflow:hidden;
+    background:linear-gradient(135deg,var(--blue),var(--navy));display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 14px rgba(11,30,58,.2);border:2px solid #fff;outline:1px solid var(--line-strong);
+  }
+  .diploma-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .diploma-info{min-width:0}
+  .diploma-title{font-weight:700;font-size:.95rem;color:var(--ink);line-height:1.3;margin-bottom:.2rem}
+  .diploma-sub{font-size:.8rem;color:var(--muted);font-weight:500}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:0 0 1.8rem;gap:1rem;animation:rise .5s .1s var(--ease) both}
+  .filter-buttons{display:flex;flex-wrap:wrap;gap:.55rem}
+  .filter-btn{
+    background:#fff;border:1px solid var(--line-strong);padding:.58rem 1.35rem;border-radius:40px;
+    font-weight:600;font-size:.88rem;color:#23456b;cursor:pointer;transition:all .22s var(--ease);
+    display:inline-flex;align-items:center;gap:.4rem;font-family:inherit;
+    box-shadow:0 1px 2px rgba(11,30,58,.04);user-select:none;
+  }
+  .filter-btn i{color:var(--gold);font-size:.85rem;transition:color .2s}
+  .filter-btn:hover{background:#f2f7ff;border-color:#9fb8d6;transform:translateY(-1px);box-shadow:0 4px 12px rgba(11,30,58,.08)}
+  .filter-btn:active{transform:translateY(0) scale(.97)}
+  .filter-btn.active{background:linear-gradient(180deg,var(--navy-2),var(--navy));border-color:var(--navy);color:#fff;box-shadow:0 6px 18px rgba(11,30,58,.28)}
+  .filter-btn.active i{color:#ffd966}
+  .filter-btn.active:hover{background:linear-gradient(180deg,#1b3860,var(--navy-2));border-color:var(--navy-2)}
+  .sort-info{color:var(--muted);font-size:.88rem;display:inline-flex;align-items:center;gap:.45rem;font-weight:500}
+  .reviews-grid{display:flex;flex-direction:column;gap:1.3rem}
+  .review-card{
+    position:relative;background:var(--card);border-radius:var(--radius-md);padding:1.8rem 1.9rem;
+    box-shadow:var(--shadow-sm);border:1px solid var(--line);
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;
+    animation:rise .45s var(--ease) both;
+  }
+  .review-card::before{
+    content:"";position:absolute;left:0;top:22px;bottom:22px;width:4px;border-radius:0 4px 4px 0;
+    background:linear-gradient(180deg,var(--gold),#f0c96a);opacity:0;transition:opacity .3s var(--ease);
+  }
+  .review-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:#d3e0f0}
+  .review-card:hover::before{opacity:1}
+  .review-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem;margin-bottom:.85rem}
+  .review-author{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+  .author-name{font-weight:700;font-size:1.08rem;color:#11223b;letter-spacing:-.01em}
+  .review-date{font-size:.82rem;color:var(--muted);display:inline-flex;align-items:center;gap:.35rem;font-weight:500}
+  .review-date i{opacity:.75}
+  .review-stars{
+    color:var(--gold);font-size:.95rem;letter-spacing:2px;
+    background:linear-gradient(180deg,#fffaf0,var(--gold-soft));padding:.35rem 1rem;border-radius:40px;
+    display:inline-flex;align-items:center;gap:.35rem;border:1px solid #f3e3c0;box-shadow:inset 0 1px 0 #fff;white-space:nowrap;
+  }
+  .review-stars .star-value{font-weight:700;color:var(--gold-deep);margin-left:.25rem;font-size:.85rem;font-variant-numeric:tabular-nums}
+  .review-text{color:var(--ink-soft);font-size:.98rem;line-height:1.65;margin-top:.55rem}
+  .review-reply{
+    margin-top:1.1rem;background:linear-gradient(180deg,#f7fbff,var(--blue-soft));border-left:3px solid var(--blue);
+    padding:1rem 1.3rem;border-radius:4px 14px 14px 4px;font-size:.93rem;color:#1c3e63;
+    display:flex;gap:.8rem;align-items:flex-start;box-shadow:inset 0 1px 0 #fff;
+  }
+  .review-reply i{color:var(--blue);margin-top:.18rem;font-size:.9rem}
+  .no-reviews{
+    text-align:center;padding:3.2rem 1rem;color:var(--muted);background:#fff;border-radius:var(--radius-md);
+    border:1.5px dashed #b7c9dd;font-size:1.05rem;font-weight:500;animation:fadeSlide .4s var(--ease) both;
+  }
+  .no-reviews i{margin-right:.4rem;opacity:.6}
+  .footer-note{margin-top:3rem;text-align:center;font-size:.84rem;color:var(--muted);border-top:1px solid #dae3ed;padding-top:1.6rem;font-weight:500}
+  .footer-note i{margin:0 .25rem;color:#9fb8d6}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:760px){
+    body{padding:1.5rem .8rem 3rem}
+    .profile-header{padding:1.6rem 1.4rem 1.4rem}
+    .profile-top{flex-direction:column;align-items:flex-start;gap:1.2rem}
+    .rating-block{margin-left:0;width:100%;justify-content:center}
+    .avatar-wrap{width:96px;height:96px}
+    .bar-bg{width:120px}
+    .review-card{padding:1.4rem 1.3rem}
+    .review-header{flex-direction:column;align-items:flex-start}
+    .diplomas{padding:1.3rem 1.2rem}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="profile-header">
+    <div class="profile-top">
+      <div class="avatar-wrap">
+        <img src="https://img.repetit.ru/teachers/71958/photo/photo_sqr_lrg.jpg?ts=639299093470770000" alt="Юлия Дмитриевна">
+      </div>
+      <div class="profile-name">
+        <h1>Юлия Дмитриевна</h1>
+        <div class="badge"><i class="fas fa-graduation-cap"></i> Школьный преподаватель · стаж 12 лет</div>
+      </div>
+      <div class="rating-block">
+        <span class="rating-number">4,9</span>
+        <div>
+          <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+          <div class="rating-count">37 отзывов</div>
+        </div>
+      </div>
+    </div>
+    <div class="stats" id="statsContainer"></div>
+  </div>
+
+  <div class="diplomas">
+    <div class="diplomas-head"><i class="fas fa-certificate"></i> Образование и дипломы</div>
+    <div class="diplomas-grid">
+      <a class="diploma-card" href="https://img.repetit.ru/teachers/71958/certs/certn46530.webp" target="_blank" rel="noopener">
+        <div class="diploma-thumb">
+          <img src="https://img.repetit.ru/teachers/71958/certs/certn46530.webp" alt="Диплом бакалавра МГУ" loading="lazy">
+        </div>
+        <div class="diploma-info">
+          <div class="diploma-title">МГУ им. М.В. Ломоносова · бакалавр</div>
+          <div class="diploma-sub">Физический факультет, физика · 2016</div>
+        </div>
+      </a>
+      <a class="diploma-card" href="https://img.repetit.ru/teachers/71958/certs/certn46529.webp" target="_blank" rel="noopener">
+        <div class="diploma-thumb">
+          <img src="https://img.repetit.ru/teachers/71958/certs/certn46529.webp" alt="Диплом магистра МГУ" loading="lazy">
+        </div>
+        <div class="diploma-info">
+          <div class="diploma-title">МГУ им. М.В. Ломоносова · магистр</div>
+          <div class="diploma-sub">Физический факультет, физика · 2018</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="filter-buttons" id="filterButtons">
+      <button class="filter-btn active" data-filter="all">Все отзывы</button>
+      <button class="filter-btn" data-filter="5"><i class="fas fa-star"></i> 5</button>
+      <button class="filter-btn" data-filter="4"><i class="fas fa-star"></i> 4</button>
+      <button class="filter-btn" data-filter="3"><i class="fas fa-star"></i> 3</button>
+      <button class="filter-btn" data-filter="2"><i class="fas fa-star"></i> 2</button>
+      <button class="filter-btn" data-filter="1"><i class="fas fa-star"></i> 1</button>
+    </div>
+    <div class="sort-info"><i class="fas fa-arrow-down-wide-short"></i> Сортировка: по умолчанию</div>
+  </div>
+
+  <div class="reviews-grid" id="reviewsGrid"></div>
+
+  <div class="footer-note"><i class="fas fa-check-circle"></i> Данные взяты из открытого профиля · REPETIT.RU</div>
+</div>
+
+<script>
+/* все 37 отзывов */
+const reviews = [
+  {author:"Екатерина",date:"20 июня 2025",rating:5,text:"С Юлией Дмитриевной мой сын занимался математикой и физикой с 8 по 11 класс. В 9 классе сдал ОГЭ на высокие баллы, в 11 классе (2025г.) ЕГЭ по математике на 95 баллов, по физике на 90 баллов. Очень благодарны Юлии Дмитриевне за высокий профессионализм, преподавательский талант, человечность, добропорядочность, умение системно давать информацию и за подготовку на высокие баллы на экзаменах. Рекомендую этого преподавателя.",reply:"Спасибо за доверие! Поздравляю Артема с поступлением на ВМК МГУ на бюджет!"},
+  {author:"Павел",date:"11 июня 2025",rating:5,text:"Юлия, спасибо огромное! Дочка готовилась к сдаче ОГЭ по математике, результат - твердая 4! Мы очень довольны и можем смело рекомендовать Юлию! Дочке очень понравилось с ней заниматься, объясняет очень понятно! Будем дальше заниматься!"},
+  {author:"Ольга",date:"11 марта 2025",rating:5,text:"Со слов клиента: \"Положительный отзыв. Хороший репетитор. Занятия были полезными, она помогла подтянуть некоторые темы по математике\"."},
+  {author:"Елена",date:"15 февраля 2025",rating:5,text:"Великолепный репетитор, замечательный человек, подход к ребёнку найдет любому. Все популярно объясняет, балл повысился с 3,6 до 5,0!!!"},
+  {author:"Алена",date:"03 февраля 2025",rating:5,text:"Юлия Дмитриевна - большая молодец! Дочь после каждого занятия в эйфории \"как же все понятно\"!"},
+  {author:"Ольга",date:"21 ноября 2024",rating:5,text:"Занимаемся подготовкой к ЕГЭ. Сыну очень нравятся занятия, есть контакт, понимание материала. Очень довольны. Сын вышел на муниципальный уровень всероссийской олимпиады."},
+  {author:"Елена",date:"14 ноября 2024",rating:5,text:"Со слов клиента: \"Все прекрасно. Дочке очень понравилась педагог. Занятия были полезными\"."},
+  {author:"Анна",date:"07 июня 2024",rating:4.8,text:"Всего оставался месяц до ОГЭ по физике, когда мы обратились к Юлии Дмитриевне. Уровень был на тот момент около 22 баллов. 2ю часть дочь не выполняла совсем. Занимались 2 раза в неделю. За короткий срок добились 37 баллов на экзамене. Но главное в том, что дочь сильно заинтересовалась за это время физикой, можно сказать полюбила. В общем, рекомендуем Юлию Заманину, как отличного репетитора.",reply:"Анна, спасибо огромное за доверие!"},
+  {author:"Юлия",date:"11 июня 2023",rating:5,text:"В течение прошедшего года Юлия помогала двум моим сыновьям (7 и 9 класс). Уровень у них разный, и с обоими Юлия показала себя как профессиональный, внимательный и очень терпеливый педагог. Это пожалуй единственный из всех «дополнительных» преподавателей, чьи уроки мои мальчики воспринимали с радостью. Оба благополучно сдали экзамены, к которым готовились. Большая благодарность Юлии за труд и за результат."},
+  {author:"Юлия",date:"10 апреля 2023",rating:5,text:"Здравствуйте! Ситуация с учеником простая, нет интереса к обучению математики. Такое бывает часто, по причине перехода в старший класс, когда меняется предмет на алгебру и педагог соответсвенно. Если в начальных классах оценки были более менее, после пятого-шестого класса, ученик в начале скатился к тройкам и позже к двойкам на уроках. Знакомство с Юлией Дмитриевной нам дало сильный толчок в знаниях. Занятия стали интересны и появилось желание и ответственность изучать эти предметы. Просто повезло, что мы с ней занимались. Это талантливый преподаватель алгебры и геометрии. С ней, легко найти общий язык для нынешнего поколения. И это главный секрет, когда ученик и учитель находятся в доброжелательном расположении и уважении друг друга. Они буквально говорят на одном языке. Отсюда и появился интерес и желание заниматься и изучать алгебру и геометрию. К сожалению, в связи с переездом и личными расходами семьи занятия временно прекратились. Но, даже за не большой период времени занятий после многочисленных двоек, ребенок сейчас вышел на твердую тройку. И это уже хорошо, в сравнении с тем, что было раньше в успеваемости по алгебре и геометрии. По-возможности продолжим обучение, результаты очень положительные. Ребенок стал уверенне и спокойнее выходить к доске в школе. Пусть ошибается, но уже не избегает алгебры и геометрии. Очень благодарны всей семьей Юлии Дмитриевне, в её честном и талантливом подходе в обучении! И самое главное, очень понравилось с ней заниматься!",reply:"Спасибо за доверие!"},
+  {author:"Марина",date:"09 апреля 2023",rating:5,text:"Юлия Дмитриевна прекрасный педагог. С дочерью занимается физикой по школьной программе. Хороший контакт с ребёнком, объясняет все в доступной форме, в работе использует доп материал в виде презентаций или другой наглядный материал, контролирует выполнение дз. Всегда находится во взаимосвязи с родителями. Занятия продолжаем.",reply:"Спасибо за теплый отзыв!"},
+  {author:"Юлия",date:"24 июня 2022",rating:5,text:"Доброго всем время суток, моя дочь занималась с Юлией Дмитриевной в течение 2-х лет, сейчас только слова благодарности можно выразить педагогу, очень доступно был предложен учебный материал и по алгебре и по геометрии, также периодически занимались и по физике. Дочь редко посещала школу, тк профессионально занимается спортом, поэтому обратились за помощью к репетитору, почти сразу возник контакт между учеником и преподавателем, занятия проходили онлайн, и всегда очень успешно, успевали разобрать и новые темы и готовиться к ЕГЭ, и результат - отлично по математике. Рекомендую Юлию Дмитриевну, спасибо огромное",reply:"Спасибо огромное за доверие!"},
+  {author:"Владимир",date:"29 мая 2022",rating:5,text:"Супер. Ребёнок написал ОГЭ легко. Юлия подняла самооценку и вселила уверенность"},
+  {author:"Александр",date:"24 мая 2022",rating:5,text:"Дочь, 7 класс, физика только началась и никак не получалось \"войти\" в предмет, освоиться в нём, чтобы не отстать с самого начала. По итогам дочь перестала бояться физику. Смело переходим в 8 класс. Ну и спасибо Юлии, что спасла семью. Без неё мы постоянно ругались, потому что терпения для разговоров по физике ни у папы, ни у дочери уже не хватало."},
+  {author:"Екатерина",date:"26 ноября 2021",rating:5,text:"Со слов клиента: \"Дочери она нравится, они занимаются с преподавателем, успехи есть, у ребенка профильная математика и репетитор очень хорошо ей помогает, она пунктуальная, все нравится нам\".",reply:"Спасибо!"},
+  {author:"Анна",date:"26 августа 2021",rating:5,text:"Отличный преподаватель! Юлия сразу нашла общий язык с ребёнком, выявила пробелы и делала упор на это. Юлия задаёт ДЗ, смотрит на усвоение материала, также ведёт ребёнка вперёд школьной программы",reply:"Спасибо за отзыв"},
+  {author:"Ирина",date:"18 августа 2021",rating:5,text:"Со слов клиента: \"Очень положительный отзыв. Ребенку (10 класс) нравились занятия. Цель была повысить успеваемость по физике, цель была достигнута. Репетитор заинтересовала ребенка предметом. Думаю, в новом учебном году тоже продолжим занятия\"."},
+  {author:"Анна",date:"27 апреля 2021",rating:5,text:"Со слов клиента: \"Все отлично, доступно объясняет для уровня 14-летнего ребенка. Решают задачи определенного уровня, берут более сложный уровень для подготовки к олимпиадам\".",reply:"Анна, спасибо за доверие! Ваня отлично постарался и получил достойные результаты ЕГЭ: математика 92 балла, физика 90 баллов. Занимались с 8 го по 11 класс."},
+  {author:"Светлана",date:"23 декабря 2020",rating:5,text:"Со слов клиента: \"Репетитор подходит. Ребенок доволен. Занятия продуктивные, интересные. Юлия Дмитриевна нашла подход к дочери. Объясняет доступно. Если что-то не понятно, она еще раз объяснит. Планируем занятия до экзамена\"."},
+  {author:"Наталья",date:"29 мая 2020",rating:5,text:"Со слов клиента: \"Нам репетитор понравился, объясняла доступно, доброжелательная. Дочке нравилось заниматься, разбирали задачи, все стало понятно. Повысилась успеваемость\"."},
+  {author:"Инна",date:"02 июля 2019",rating:5,text:"Со слов клиента: \"Очень понравились занятия! Репетитор очень хорошо проводила занятия с учеником, необходимо было углубленное изучение предмета. Уровень знаний повысился, очень довольны!\""},
+  {author:"Виктория",date:"19 июня 2019",rating:5,text:"Со слов клиента: \"Только положительный отзыв. Репетитор легко объясняла. Ребенку все было понятно. Дочка подтянулась по математике\"."},
+  {author:"Татьяна",date:"14 июня 2019",rating:4.7,text:"Со слов клиента: \"Нас все устраивало. Она пунктуальная, вежливая, делала свое дело. Ребенку занятия нравились, стало проще заниматься в школе, появилась уверенность. Повысился уровень знаний по математике\"."},
+  {author:"Александр",date:"06 июня 2019",rating:4.5,text:"Со слов клиента: \"Юлия Дмитриевна хорошо общалась с ребёнком, понятно объясняла материал. Ученица за время занятий улучшила знание предмета\"."},
+  {author:"Светлана",date:"25 апреля 2019",rating:5,text:"Со слов клиента: \"Ответственная, ребенку с ней заниматься нравится, это главное. Присылает домашнее задание, приходит всегда вовремя. Главное, что сыну нравится. 5 как была, так и осталась\"."},
+  {author:"Елена",date:"29 января 2019",rating:5,text:"Юлия отличный репетитор, ребенку заниматься нравится"},
+  {author:"Залина",date:"16 ноября 2018",rating:4,text:"Со слов клиента: \"Хороший репетитор, спокойная. Объясняла доходчиво, ребенку было понятно. Позанимались мы месяц, результаты были. Мы переехали, поэтому занятия прекратили\"."},
+  {author:"Ирина",date:"16 ноября 2018",rating:2,text:"Со слов клиента: \"Она нам не понравилась, а именно как преподает математику. Объяснений мало, а требований много. Вместо того чтобы объяснить, говорила: \"Думай сама, решай сама\"\".",reply:"С учеником было проведено 1 занятие. На первой встрече я всегда провожу диагностику. Естественно, ученик решает задачи самостоятельно, чтобы я могла понимать в каких разделах есть пробелы. Если ребёнок не может выполнить задание, то я подвожу его к правильному решению. Для меня главное чтобы ребёнок учился думать."},
+  {author:"Светлана",date:"06 сентября 2018",rating:5,text:"Со слов клиента: \"Хороший репетитор, дала много знаний, экзамен ребенок сдал очень хорошо. Я думаю, что еще ее приглашу\"."},
+  {author:"Людмила",date:"27 июня 2018",rating:5,text:"Огромное спасибо Юлии Дмитриевне! Занимались с января месяца. По физике в школе оценка \"3\". Была. В итоге \"5\" по физике (ОГЭ)!!! В аттестат поставили \"4\". Очень довольны результатом. Превысил все наши ожидания."},
+  {author:"Алена",date:"07 мая 2018",rating:4.7,text:"Со слов клиента: \"Все положительно, нам все нравится. Всегда все вовремя, все четко. Хороший репетитор. Ребенку она очень нравится. Хотелось, чтобы была обратная связь с родителями\"."},
+  {author:"Татьяна",date:"26 декабря 2017",rating:5,text:"Со слов клиента: \"Все очень нравится. Нравится как занимается с ребенком. У ребенка стали лучше отметки. Она очень пунктуальная. Репетитор понятно, доступно объясняет, использует дополнительные материалы, присылает дочке по почте материалы, дочка их решает. Быстро нашли контакт между собой. Они прорешали весь учебник, оценки улучшились, появилось больше знаний, она стала увереннее в предмете.\""},
+  {author:"Анна",date:"06 июня 2017",rating:5,text:"Положительное впечатление о репетиторе по физике Юлии Дмитриевне, надеюсь, в сентябре мы продолжим с ней заниматься. Результат от занятий с преподавателем есть, оценки в школе у сына улучшились, хотя мы занимались недолго. Работу педагога я оцениваю на 5. Преподаватель всегда вовремя приходит на занятия, она пунктуальная, ответственная. Быстро нашла подход к ребенку. Я очень довольна полученным результатом."},
+  {author:"Елена",date:"30 мая 2017",rating:5,text:"Со слов клиента: \"Нам репетитор подошел, ребенку понравилась. Все рассказывала родителям, что плохо у ребенка, а что хорошо. Хорошо объясняет, результаты покажет ЕГЭ\"."},
+  {author:"Татьяна",date:"23 мая 2017",rating:5,text:"Со слов клиента: \"Превосходный репетитор, мне она подошла, с лету понимаю темы. Мы встречались пару раз, уроки очень помогли. Если попадем в математический класс, то в сентябре продолжим\"."},
+  {author:"Ирина",date:"19 мая 2017",rating:5,text:"Со слов клиента: \"Хороший репетитор, ребенок с ней занимается. Занятия проходят успешно и результативно, все в порядке\".",reply:"Спасибо за отзыв"},
+  {author:"Инга",date:"18 мая 2017",rating:5,text:"Юлия Дмитриевна занимается с моей дочерью (15 лет) по предмету физика 5 месяцев. Целью занятий была помощь в освоении программного материала 8 класса. За это время уровень с тройки поднялся до пятёрки. Мы очень довольны результатами. Юлия обаятельная, внимательная, прекрасно знает свой предмет, очень доходчиво объясняет, пунктуальная, терпеливая. Подготовку к ОГЭ будем проводить только с ней. Для дочери она не просто репетитор, но и старший товарищ и советчик.",reply:"Спасибо за доверие!"}
+];
+
+/* ── Статистика ── */
+const total = reviews.length;
+const counts = {1:0,2:0,3:0,4:0,5:0};
+reviews.forEach(r => { const k = Math.round(r.rating); if (counts[k] !== undefined) counts[k]++; });
+const statsContainer = document.getElementById('statsContainer');
+const labels = ['1 звезда','2 звезды','3 звезды','4 звезды','5 звёзд'];
+for (let i = 1; i <= 5; i++) {
+  const p = total ? Math.round(counts[i]/total*100) : 0;
+  const div = document.createElement('div');
+  div.className = 'stat-item';
+  div.innerHTML = `<span class="stat-label">${labels[i-1]}</span>
+    <div class="bar-bg"><div class="bar-fill ${i>=4?'hot':''}" style="width:0" data-width="${p}"></div></div>
+    <span class="stat-percent">${p}%</span>`;
+  statsContainer.appendChild(div);
+}
+requestAnimationFrame(() => {
+  statsContainer.querySelectorAll('.bar-fill').forEach(b => {
+    b.style.width = b.dataset.width + '%';
+  });
+});
+
+/* ── Рендер отзывов ── */
+const grid = document.getElementById('reviewsGrid');
+const filterButtons = document.getElementById('filterButtons');
+let currentFilter = 'all';
+
+function escapeHtml(t) {
+  if (!t) return '';
+  return String(t).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+}
+
+function render() {
+  let list = reviews;
+  if (currentFilter !== 'all') list = reviews.filter(r => Math.round(r.rating) === Number(currentFilter));
+
+  if (!list.length) {
+    grid.innerHTML = '<div class="no-reviews"><i class="fas fa-comment-slash"></i> Нет отзывов с такой оценкой</div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(r => {
+    const full = Math.floor(r.rating);
+    const half = r.rating % 1 >= 0.5;
+    let stars = '';
+    for (let i = 0; i < full; i++) stars += '<i class="fas fa-star"></i>';
+    if (half) stars += '<i class="fas fa-star-half-alt"></i>';
+    const ratingStr = r.rating.toFixed(1).replace('.', ',');
+    return `<div class="review-card">
+      <div class="review-header">
+        <div class="review-author">
+          <span class="author-name">${escapeHtml(r.author)}</span>
+          <span class="review-date"><i class="far fa-calendar-alt"></i> ${escapeHtml(r.date)}</span>
+        </div>
+        <div class="review-stars">${stars}<span class="star-value">${ratingStr}</span></div>
+      </div>
+      <div class="review-text">${escapeHtml(r.text)}</div>
+      ${r.reply ? `<div class="review-reply"><i class="fas fa-reply"></i><div>${escapeHtml(r.reply)}</div></div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+filterButtons.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  filterButtons.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = btn.dataset.filter;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
