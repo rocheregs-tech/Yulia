@@ -122,6 +122,7 @@
   .filter-btn.active:hover{background:linear-gradient(180deg,#1c3a66,var(--navy-2));border-color:var(--navy-2)}
 
   /* ── Карточки отзывов ── */
+  #reviews{scroll-margin-top:1.25rem}
   .reviews-grid{display:flex;flex-direction:column;gap:1.2rem}
   .review-card{position:relative;padding:clamp(1.3rem,2.5vw,1.85rem) clamp(1.25rem,2.5vw,1.95rem);border-radius:var(--radius-lg);background:var(--surface);border:1px solid var(--hairline);box-shadow:var(--shadow-sm);transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out),border-color .3s;animation:rise .5s var(--ease-out) both;will-change:transform}
   .review-card::before{content:"";position:absolute;left:0;top:24px;bottom:24px;width:4px;border-radius:0 4px 4px 0;background:linear-gradient(180deg,var(--gold),#f3cd79);opacity:0;transform:scaleY(.6);transform-origin:center;transition:opacity .35s var(--ease-out),transform .35s var(--ease-out)}
@@ -276,6 +277,84 @@
     justify-content: center;
   }
 }
+
+/* ── Модальное окно дипломов ── */
+.diploma-modal{
+  position:fixed; inset:0; z-index:1000;
+  display:flex; align-items:center; justify-content:center;
+  padding:clamp(1rem,4vw,2.5rem);
+  background:rgba(6,16,31,.72);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .3s var(--ease-out),visibility 0s linear .3s;
+}
+.diploma-modal.is-open{opacity:1; visibility:visible; pointer-events:auto; transition:opacity .3s var(--ease-out),visibility 0s}
+.diploma-modal__dialog{
+  position:relative;
+  width:min(920px,100%);
+  max-height:100%;
+  display:flex; flex-direction:column;
+  background:var(--surface);
+  border-radius:var(--radius-lg);
+  border:1px solid var(--hairline);
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  transform:translateY(18px) scale(.97);
+  transition:transform .35s var(--ease-out);
+}
+.diploma-modal.is-open .diploma-modal__dialog{transform:none}
+.diploma-modal__media{
+  display:flex; align-items:center; justify-content:center;
+  min-height:0; overflow:auto;
+  padding:clamp(.6rem,2vw,1.2rem);
+  background:linear-gradient(180deg,#eef4fb,#e2ecf8);
+}
+.diploma-modal__media img{
+  display:block; width:auto; height:auto;
+  max-width:100%; max-height:calc(100vh - 220px);
+  border-radius:var(--radius-md);
+  background:#fff;
+  box-shadow:var(--shadow-md);
+}
+.diploma-modal__caption{
+  display:flex; align-items:center; gap:.85rem;
+  padding:1rem clamp(1.1rem,2.5vw,1.5rem) 1.15rem;
+  border-top:1px solid var(--hairline);
+  background:linear-gradient(180deg,#fff,#f8fbff);
+}
+.diploma-modal__icon{
+  flex:0 0 auto; width:42px; height:42px; border-radius:12px;
+  display:grid; place-items:center;
+  color:#fff; font-size:1.05rem;
+  background:linear-gradient(135deg,var(--blue),var(--navy));
+  box-shadow:var(--shadow-sm);
+}
+.diploma-modal__text{min-width:0}
+.diploma-modal__title{font-size:1rem; font-weight:800; color:var(--ink); line-height:1.3}
+.diploma-modal__sub{font-size:.84rem; font-weight:500; color:var(--muted); margin-top:.15rem}
+.diploma-modal__close{
+  position:absolute; top:.8rem; right:.8rem; z-index:2;
+  width:42px; height:42px; border-radius:50%;
+  display:grid; place-items:center;
+  font-family:inherit; font-size:1.05rem; color:var(--navy);
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--hairline-strong);
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  transition:transform .2s var(--ease),background .2s,box-shadow .2s;
+}
+.diploma-modal__close:hover{transform:rotate(90deg) scale(1.05); background:#fff; box-shadow:var(--shadow-md)}
+.diploma-modal__close:focus-visible,
+.diploma-card:focus-visible{outline:3px solid rgba(74,122,181,.55); outline-offset:3px}
+body.modal-open{overflow:hidden}
+@media (max-width:600px){
+  .diploma-modal{padding:.75rem}
+  .diploma-modal__media img{max-height:calc(100vh - 190px)}
+  .diploma-modal__caption{padding:.9rem 1rem 1rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .diploma-modal,.diploma-modal__dialog{transition:none}
+}
 </style>
 </head>
 <body>
@@ -309,13 +388,13 @@
       </div>
     </div>
 
-    <!-- Кнопки действий -->
+        <!-- Кнопки действий -->
     <div class="action-buttons">
-      <a href="https://t.me/ВАШ_НИК_ТУТ" target="_blank" rel="noopener" class="btn btn-primary">
+      <a href="https://t.me/+79167398971" target="_blank" rel="noopener" class="btn btn-primary">
         <i class="fab fa-telegram-plane"></i> Записаться на занятие
       </a>
       <a href="#reviews" class="btn btn-secondary">
-        <i class="fas fa-comments"></i> Читать отзывы
+        <i class="fas fa-comment-dots"></i> Читать отзывы
       </a>
     </div>
   </div>
@@ -363,14 +442,14 @@
   <div class="diplomas">
     <div class="diplomas-head"><i class="fas fa-certificate"></i> Образование и дипломы</div>
     <div class="diplomas-grid">
-      <a class="diploma-card" href="https://img.repetit.ru/teachers/71958/certs/certn46530.webp" target="_blank" rel="noopener">
+      <a class="diploma-card" href="https://img.repetit.ru/teachers/71958/certs/certn46530.webp" data-diploma-src="https://img.repetit.ru/teachers/71958/certs/certn46530.webp" data-diploma-title="МГУ им. М.В. Ломоносова · бакалавр" data-diploma-sub="Физический факультет, физика · 2016" aria-haspopup="dialog">
         <div class="diploma-thumb"><img src="https://img.repetit.ru/teachers/71958/certs/certn46530.webp" alt="Диплом бакалавра МГУ" loading="lazy"></div>
         <div class="diploma-info">
           <div class="diploma-title">МГУ им. М.В. Ломоносова · бакалавр</div>
           <div class="diploma-sub">Физический факультет, физика · 2016</div>
         </div>
       </a>
-      <a class="diploma-card" href="https://img.repetit.ru/teachers/71958/certs/certn46529.webp" target="_blank" rel="noopener">
+      <a class="diploma-card" href="https://img.repetit.ru/teachers/71958/certs/certn46529.webp" data-diploma-src="https://img.repetit.ru/teachers/71958/certs/certn46529.webp" data-diploma-title="МГУ им. М.В. Ломоносова · магистр" data-diploma-sub="Физический факультет, физика · 2018" aria-haspopup="dialog">
         <div class="diploma-thumb"><img src="https://img.repetit.ru/teachers/71958/certs/certn46529.webp" alt="Диплом магистра МГУ" loading="lazy"></div>
         <div class="diploma-info">
           <div class="diploma-title">МГУ им. М.В. Ломоносова · магистр</div>
@@ -399,24 +478,41 @@
     <div class="reviews-grid" id="reviewsGrid"></div>
   </div>
 
-  <!-- ═══ КОНТАКТЫ ═══ -->
+   <!-- ═══ КОНТАКТЫ ═══ -->
   <footer class="footer-contact">
     <div class="contact-links">
-      <a href="https://t.me/ВАШ_НИК_ТУТ" target="_blank" rel="noopener" class="contact-item">
+      
+      <!-- Ссылка на Telegram по твоему номеру -->
+      <a href="https://t.me/+79167398971" target="_blank" rel="noopener" class="contact-item">
         <i class="fab fa-telegram-plane"></i> Telegram
       </a>
-      <a href="tel:+79990000000" class="contact-item">
-        <i class="fas fa-phone-alt"></i> +7 (999) 000-00-00
-      </a>
-      <a href="https://wa.me/79990000000" target="_blank" rel="noopener" class="contact-item">
-        <i class="fab fa-whatsapp"></i> WhatsApp
-      </a>
+      
+      
+
     </div>
     <div class="footer-copy">© 2026 · Репетитор по физике и математике. Все права защищены.</div>
   </footer>
 
 </div>
 
+<!-- ═══ МОДАЛЬНОЕ ОКНО ДИПЛОМА ═══ -->
+<div class="diploma-modal" id="diplomaModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="diplomaModalTitle">
+  <div class="diploma-modal__dialog">
+    <button type="button" class="diploma-modal__close" id="diplomaModalClose" aria-label="Закрыть">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="diploma-modal__media">
+      <img id="diplomaModalImage" src="" alt="">
+    </div>
+    <div class="diploma-modal__caption">
+      <div class="diploma-modal__icon"><i class="fas fa-certificate"></i></div>
+      <div class="diploma-modal__text">
+        <div class="diploma-modal__title" id="diplomaModalTitle"></div>
+        <div class="diploma-modal__sub" id="diplomaModalSub"></div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ═══ СКРИПТ ═══ -->
 <script>
 /* все 37 отзывов */
@@ -512,6 +608,86 @@ filterButtons.addEventListener('click', e => {
 });
 
 render();
+</script>
+
+<!-- ═══ МОДАЛЬНОЕ ОКНО ДИПЛОМОВ ═══ -->
+<script>
+(() => {
+  const modal = document.getElementById('diplomaModal');
+  if (!modal) return;
+
+  const dialog = modal.querySelector('.diploma-modal__dialog');
+  const image = document.getElementById('diplomaModalImage');
+  const title = document.getElementById('diplomaModalTitle');
+  const sub = document.getElementById('diplomaModalSub');
+  const closeBtn = document.getElementById('diplomaModalClose');
+  const cards = document.querySelectorAll('.diploma-card[data-diploma-src]');
+  let lastFocused = null;
+
+  function openModal(card) {
+    lastFocused = document.activeElement;
+    image.src = card.dataset.diplomaSrc;
+    image.alt = card.dataset.diplomaTitle || 'Диплом';
+    title.textContent = card.dataset.diplomaTitle || '';
+    sub.textContent = card.dataset.diplomaSub || '';
+    sub.hidden = !sub.textContent;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    window.requestAnimationFrame(() => closeBtn.focus());
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    window.setTimeout(() => {
+      if (!modal.classList.contains('is-open')) {
+        image.removeAttribute('src');
+        image.alt = '';
+      }
+    }, 300);
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+      event.preventDefault();
+      openModal(card);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', event => {
+    if (event.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', event => {
+    if (!modal.classList.contains('is-open')) return;
+
+    if (event.key === 'Escape') {
+      closeModal();
+      return;
+    }
+
+    if (event.key === 'Tab') {
+      const focusables = dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+})();
 </script>
 </body>
 </html>
